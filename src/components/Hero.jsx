@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import midMountains from "../assets/images/tree-mid.png";
-import foreGrass from "../assets/images/tree-fore.png";
+import midMountains from "../assets/images/tree-mid.webp";
+import foreGrass from "../assets/images/tree-fore.webp";
 import treeHero from "../assets/images/tree-hero.webp";
 import treeHero960 from "../assets/images/tree-hero-960.webp";
 
