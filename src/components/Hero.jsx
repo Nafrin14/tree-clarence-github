@@ -1,5 +1,5 @@
-import midMountains from "../assets/images/tree-mid.webp";
-import foreGrass from "../assets/images/tree-fore.webp";
+import midMountains from "../assets/images/tree-mid.png";
+import foreGrass from "../assets/images/tree-fore.png";
 import treeHero from "../assets/images/tree-hero.webp";
 import treeHero960 from "../assets/images/tree-hero-960.webp";
 
@@ -52,7 +52,10 @@ function Hero() {
 
     document
       .getElementById("services")
-      ?.scrollIntoView({ behavior: "smooth" });
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
   };
 
   return (
@@ -60,8 +63,8 @@ function Hero() {
       id="top"
       className="hero-section relative min-h-screen w-full overflow-hidden"
     >
-      {/* Main hero image - LCP image */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Main hero background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={treeHero960}
           srcSet={`${treeHero960} 960w, ${treeHero} 1920w`}
@@ -72,19 +75,17 @@ function Hero() {
           loading="eager"
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover object-bottom"
+          className="h-full w-full object-cover object-center"
         />
       </div>
 
-      {/* Background glow */}
+      {/* Soft dark overlay for text visibility */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-      >
-        <div className="hero-glow absolute left-1/2 top-[18%] h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#a4d38b]/35 blur-3xl" />
-      </div>
+        className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/10 via-black/15 to-black/45"
+      />
 
-      {/* Distant mountains */}
+      {/* Distant mountain layer */}
       <img
         src={midMountains}
         alt=""
@@ -93,8 +94,18 @@ function Hero() {
         height="1080"
         loading="eager"
         decoding="async"
-        className="hero-mountains pointer-events-none absolute bottom-0 left-0 h-full w-full select-none object-cover object-bottom opacity-90"
+        className="pointer-events-none absolute inset-0 z-[5] h-full w-full select-none object-cover object-bottom opacity-45"
       />
+
+      {/* Background glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10"
+      >
+        <div className="hero-glow absolute left-1/2 top-[18%] h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#a4d38b]/25 blur-3xl" />
+      </div>
+
+      <FloatingLeaves />
 
       {/* Foreground grass */}
       <img
@@ -105,20 +116,20 @@ function Hero() {
         height="600"
         loading="eager"
         decoding="async"
-        className="hero-grass pointer-events-none absolute bottom-[-35px] left-[-15%] z-[5] w-[130%] max-w-none select-none"
+        className="pointer-events-none absolute bottom-[-35px] left-[-15%] z-[25] w-[130%] max-w-none select-none"
       />
 
-      <FloatingLeaves />
-
       {/* Hero content */}
-      <div className="relative z-30 flex min-h-screen flex-col items-center justify-center px-6 text-center">
+      <div className="relative z-30 flex min-h-screen flex-col items-center justify-center px-6 pb-24 pt-28 text-center md:pb-20 md:pt-32">
         <p className="hero-fade-up hero-delay-1 mb-6 text-xs uppercase tracking-[0.4em] text-[#dcefd4]">
           Quality Tree Services
         </p>
 
         <h1 className="hero-fade-up hero-delay-2 max-w-5xl font-serif text-5xl font-semibold leading-[0.95] text-[#f7fbf4] drop-shadow-lg md:text-7xl lg:text-8xl">
           Buffalo&apos;s{" "}
-          <span className="hero-gradient italic">Premier</span>
+          <span className="hero-gradient italic">
+            Premier
+          </span>
           <br />
           Tree Experts.
         </h1>
@@ -131,7 +142,7 @@ function Hero() {
         <a
           href="#services"
           onClick={scrollToServices}
-          className="hero-pop-in hero-delay-4 mt-10 rounded-full border border-white/40 bg-black/10 px-6 py-3 text-sm text-white backdrop-blur-sm transition hover:bg-white/15"
+          className="hero-pop-in hero-delay-4 mt-10 rounded-full border border-white/40 bg-black/20 px-6 py-3 text-sm text-white backdrop-blur-sm transition hover:bg-white/15"
         >
           View Our Services ↓
         </a>
