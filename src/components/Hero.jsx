@@ -1,5 +1,5 @@
 import midMountains from "../assets/images/tree-mid.png";
-import foreGrass from "../assets/images/tree-fore.png";
+import foreGrass from "../assets/images/tree-fore.webp";
 
 const treeHero =
   `${import.meta.env.BASE_URL}tree-hero.webp`;
