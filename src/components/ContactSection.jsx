@@ -1,0 +1,209 @@
+import { useEffect, useState } from "react";
+import {
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaClock,
+} from "react-icons/fa";
+
+const FORM_SRC =
+  "https://link.kdlead.com/widget/form/PfCYLIwBwBPyLIV9h4Gl";
+
+const contactItems = [
+  {
+    icon: <FaPhoneAlt />,
+    title: "Call Us Anytime",
+    lines: [
+      "716-710-8864",
+      "Available 24/7 for emergencies",
+    ],
+    link: "tel:+17167108864",
+  },
+  {
+    icon: <FaMapMarkerAlt />,
+    title: "Our Location",
+    lines: [
+      "9950 County Rd",
+      "Clarence Center, NY 14032",
+      "United States",
+    ],
+  },
+  {
+    icon: <FaClock />,
+    title: "Business Hours",
+    lines: [
+      "Mon – Sat: 7:00 AM – 7:00 PM",
+      "Emergency: 24/7",
+    ],
+  },
+];
+
+export default function ContactSection() {
+  const [loaded, setLoaded] = useState(false);
+  const [showFallback, setShowFallback] = useState(false);
+
+  useEffect(() => {
+    const existingScript = document.getElementById(
+      "ghl-form-embed-script"
+    );
+
+    if (!existingScript) {
+      const script = document.createElement("script");
+
+      script.src =
+        "https://link.kdlead.com/js/form_embed.js";
+      script.async = true;
+      script.id = "ghl-form-embed-script";
+
+      document.body.appendChild(script);
+    }
+
+    const fallbackTimer = window.setTimeout(() => {
+      if (!loaded) {
+        setShowFallback(true);
+      }
+    }, 10000);
+
+    return () => {
+      window.clearTimeout(fallbackTimer);
+    };
+  }, [loaded]);
+
+  return (
+    <section
+      id="contact"
+      className="relative overflow-hidden bg-[#28362f] px-6 py-28 text-white md:px-12"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#83a961]/10 blur-3xl"
+      />
+
+      <div className="relative mx-auto max-w-6xl">
+        <div className="mb-16 text-center">
+          <p className="mb-4 text-xs uppercase tracking-[0.4em] text-[#8aab80]">
+            Get In Touch
+          </p>
+
+          <h2 className="font-serif text-4xl font-semibold sm:text-5xl md:text-6xl">
+            Request a{" "}
+            <span className="services-gradient italic">
+              Free Quote
+            </span>
+          </h2>
+
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-white/60 md:text-lg">
+            Tell us about your tree care needs and our team will
+            contact you as soon as possible.
+          </p>
+        </div>
+
+        <div className="grid items-start gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+          {/* LEFT CONTACT DETAILS */}
+          <div className="space-y-5">
+            {contactItems.map((item) => (
+              <article
+                key={item.title}
+                className="contact-info-card"
+              >
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#77996c]/15 text-xl text-[#95b88b]">
+                  {item.icon}
+                </div>
+
+                <div>
+                  <h3 className="font-serif text-2xl font-semibold text-white">
+                    {item.title}
+                  </h3>
+
+                  <div className="mt-3 space-y-1">
+                    {item.lines.map((line, index) =>
+                      item.link && index === 0 ? (
+                        <a
+                          key={line}
+                          href={item.link}
+                          className="block font-semibold text-[#a6c79c] transition hover:text-[#cce0c5]"
+                        >
+                          {line}
+                        </a>
+                      ) : (
+                        <p
+                          key={line}
+                          className="leading-6 text-white/55"
+                        >
+                          {line}
+                        </p>
+                      )
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {/* RIGHT GHL FORM */}
+          <div className="contact-form-shell">
+            {!loaded && !showFallback && (
+              <div className="contact-loading">
+                <div className="contact-loading-line w-1/3" />
+                <div className="contact-loading-line w-full" />
+                <div className="contact-loading-line w-full" />
+                <div className="contact-loading-line w-2/3" />
+                <div className="contact-loading-box" />
+              </div>
+            )}
+
+            {showFallback && !loaded && (
+              <div className="flex min-h-[420px] flex-col items-center justify-center px-8 text-center">
+                <h3 className="font-serif text-2xl font-semibold">
+                  Contact form is taking longer to load
+                </h3>
+
+                <p className="mt-4 max-w-md leading-7 text-white/55">
+                  Please refresh the page or contact us directly by
+                  phone.
+                </p>
+
+                <a
+                  href="tel:+17167108864"
+                  className="mt-7 rounded-full bg-[#97ba8d] px-7 py-3 font-semibold text-[#28362f]"
+                >
+                  Call 716-710-8864
+                </a>
+              </div>
+            )}
+
+            <iframe
+              src={FORM_SRC}
+              style={{
+                width: "100%",
+                height: "891px",
+                border: "none",
+                borderRadius: "8px",
+                display: showFallback && !loaded ? "none" : "block",
+              }}
+              id="inline-PfCYLIwBwBPyLIV9h4Gl"
+              data-layout="{'id':'INLINE'}"
+              data-trigger-type="alwaysShow"
+              data-trigger-value=""
+              data-activation-type="alwaysActivated"
+              data-activation-value=""
+              data-deactivation-type="neverDeactivate"
+              data-deactivation-value=""
+              data-form-name="Form 0"
+              data-height="891"
+              data-layout-iframe-id="inline-PfCYLIwBwBPyLIV9h4Gl"
+              data-form-id="PfCYLIwBwBPyLIV9h4Gl"
+              title="Contact form"
+              sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-storage-access-by-user-activation"
+              allow="storage-access"
+              loading="lazy"
+              onLoad={() => {
+                setLoaded(true);
+                setShowFallback(false);
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
