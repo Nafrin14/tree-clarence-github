@@ -51,10 +51,6 @@ export default function ContactSection() {
   const [showFallback, setShowFallback] =
     useState(false);
 
-  /*
-   * Contact form viewportக்கு அருகில் வந்த பிறகு மட்டும்
-   * iframe render ஆகும்.
-   */
   useEffect(() => {
     const formShell = formShellRef.current;
 
@@ -73,13 +69,7 @@ export default function ContactSection() {
       },
       {
         root: null,
-
-        /*
-         * Contact form screenக்கு வருவதற்கு 200px முன்னால்
-         * loading ஆரம்பிக்கும்.
-         */
         rootMargin: "200px 0px",
-
         threshold: 0.01,
       }
     );
@@ -91,17 +81,12 @@ export default function ContactSection() {
     };
   }, [shouldLoadForm]);
 
-  /*
-   * Form load ஆக வேண்டிய நேரத்தில் மட்டும்
-   * GHL embed script சேர்க்கப்படும்.
-   */
   useEffect(() => {
     if (!shouldLoadForm) {
       return undefined;
     }
 
     const scriptId = "ghl-form-embed-script";
-
     const existingScript =
       document.getElementById(scriptId);
 
@@ -119,10 +104,6 @@ export default function ContactSection() {
     return undefined;
   }, [shouldLoadForm]);
 
-  /*
-   * Form render ஆன பிறகும் 12 secondsக்குள்
-   * load ஆகவில்லை என்றால் fallback காட்டும்.
-   */
   useEffect(() => {
     if (!shouldLoadForm || loaded) {
       return undefined;
@@ -154,7 +135,7 @@ export default function ContactSection() {
 
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-16 text-center">
-          <p className="mb-4 text-xs uppercase tracking-[0.4em] text-[#8aab80]">
+          <p className="mb-4 text-xs uppercase tracking-[0.4em] text-[#b7d3ad]">
             Get In Touch
           </p>
 
@@ -165,21 +146,20 @@ export default function ContactSection() {
             </span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-white/60 md:text-lg">
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-white/80 md:text-lg">
             Tell us about your tree care needs and our team will
             contact you as soon as possible.
           </p>
         </div>
 
         <div className="grid items-start gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          {/* Left contact details */}
           <div className="space-y-5">
             {contactItems.map((item) => (
               <article
                 key={item.title}
                 className="contact-info-card"
               >
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#77996c]/15 text-xl text-[#95b88b]">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#77996c]/20 text-xl text-[#b7d3ad]">
                   {item.icon}
                 </div>
 
@@ -194,14 +174,14 @@ export default function ContactSection() {
                         <a
                           key={line}
                           href={item.link}
-                          className="block font-semibold text-[#a6c79c] transition hover:text-[#cce0c5]"
+                          className="block font-semibold text-[#c6e0bd] transition hover:text-white"
                         >
                           {line}
                         </a>
                       ) : (
                         <p
                           key={line}
-                          className="leading-6 text-white/55"
+                          className="leading-6 text-white/75"
                         >
                           {line}
                         </p>
@@ -213,7 +193,6 @@ export default function ContactSection() {
             ))}
           </div>
 
-          {/* Right GHL form */}
           <div
             ref={formShellRef}
             className="contact-form-shell min-h-[891px]"
@@ -226,7 +205,7 @@ export default function ContactSection() {
                 <div className="contact-loading-line w-2/3" />
                 <div className="contact-loading-box" />
 
-                <p className="mt-6 text-center text-sm text-white/45">
+                <p className="mt-6 text-center text-sm text-white/80">
                   Contact form will load when you reach this
                   section.
                 </p>
@@ -243,7 +222,7 @@ export default function ContactSection() {
                   <div className="contact-loading-line w-2/3" />
                   <div className="contact-loading-box" />
 
-                  <p className="mt-6 text-center text-sm text-white/45">
+                  <p className="mt-6 text-center text-sm text-white/80">
                     Loading contact form...
                   </p>
                 </div>
@@ -253,18 +232,18 @@ export default function ContactSection() {
               showFallback &&
               !loaded && (
                 <div className="flex min-h-[891px] flex-col items-center justify-center px-8 text-center">
-                  <h3 className="font-serif text-2xl font-semibold">
+                  <h3 className="font-serif text-2xl font-semibold text-white">
                     Contact form is taking longer to load
                   </h3>
 
-                  <p className="mt-4 max-w-md leading-7 text-white/55">
+                  <p className="mt-4 max-w-md leading-7 text-white/75">
                     Please refresh the page or contact us directly
                     by phone.
                   </p>
 
                   <a
                     href="tel:+17167108864"
-                    className="mt-7 rounded-full bg-[#97ba8d] px-7 py-3 font-semibold text-[#28362f] transition hover:bg-[#b8dc90]"
+                    className="mt-7 rounded-full bg-[#b8dcae] px-7 py-3 font-semibold text-[#1f2c26] transition hover:bg-white"
                   >
                     Call 716-710-8864
                   </a>
