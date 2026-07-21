@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import midMountains from "../assets/images/tree-mid.png";
-import foreGrass from "../assets/images/tree-fore.png";
+import midMountains from "../assets/images/tree-mid.webp";
+import foreGrass from "../assets/images/tree-fore.webp";
 
 const leavesCount = 20;
 

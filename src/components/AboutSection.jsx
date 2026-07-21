@@ -51,7 +51,7 @@ export default function AboutSection() {
         <div className="space-y-6">
           <div className="relative h-64 w-full overflow-hidden rounded-[2rem]">
             <img
-              src="/about_tree_care.png"
+              src="/about_tree_care.webp"
               alt="Professional tree care arborist"
               className="h-full w-full object-cover"
             />

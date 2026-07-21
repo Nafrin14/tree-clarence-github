@@ -3,22 +3,22 @@ export default function GallerySection() {
     {
       title: "Tree Removal",
       subtitle: "Safe & Professional",
-      image: "/gallery_tree_removal.png"
+      image: "/gallery_tree_removal.webp"
     },
     {
       title: "Tree Trimming",
       subtitle: "Healthy Growth",
-      image: "/service_tree_trimming.png"
+      image: "/service_tree_trimming.webp"
     },
     {
       title: "Emergency Service",
       subtitle: "24/7 Response",
-      image: "/gallery_emergency_tree.png"
+      image: "/gallery_emergency_tree.webp"
     },
     {
       title: "Stump Grinding",
       subtitle: "Complete Cleanup",
-      image: "/gallery_stump_grinding.png"
+      image: "/gallery_stump_grinding.webp"
     },
   ];
 

@@ -9,7 +9,7 @@ import {
   Users,
 } from "lucide-react";
 
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo.webp";
 
 const navItems = [
   { id: "top", label: "Home", icon: Home },
