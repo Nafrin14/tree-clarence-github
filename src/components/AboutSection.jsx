@@ -1,4 +1,5 @@
 import { FaCheckCircle } from "react-icons/fa";
+import aboutImage from "../assets/images/about_tree_care.webp";
 
 const features = [
   "Certified Arborists",
@@ -51,7 +52,7 @@ export default function AboutSection() {
         <div className="space-y-6">
           <div className="relative h-64 w-full overflow-hidden rounded-[2rem]">
             <img
-              src="/about_tree_care.webp"
+              src={aboutImage}
               alt="Professional tree care arborist"
               className="h-full w-full object-cover"
             />

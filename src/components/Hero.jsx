@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
-import midMountains from "../assets/images/tree-mid.webp";
-import foreGrass from "../assets/images/tree-fore.webp";
+import midMountains from "../assets/images/tree-mid.png";
+import foreGrass from "../assets/images/tree-fore.png";
+import treeHero from "../assets/images/tree-hero.webp";
+import treeHero960 from "../assets/images/tree-hero-960.webp";
 
 const leavesCount = 20;
 
@@ -86,8 +88,8 @@ function Hero() {
       {/* Main hero tree */}
       <div className="absolute inset-0 overflow-hidden">
         <img
-          src="/tree-hero.webp"
-          srcSet="/tree-hero-960.webp 960w, /tree-hero.webp 1920w"
+          src={treeHero}
+          srcSet={`${treeHero960} 960w, ${treeHero} 1920w`}
           sizes="100vw"
           alt="Ancient oak tree silhouette at sunrise"
           width="1920"

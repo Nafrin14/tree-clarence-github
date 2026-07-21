@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import trimmingImg from "../assets/images/service_tree_trimming.webp";
 
 const services = [
   {
@@ -143,7 +144,7 @@ function ServicesSection() {
 
           <div className="mx-auto mt-10 h-64 w-full max-w-4xl overflow-hidden rounded-[2rem]">
             <img
-              src="/service_tree_trimming.webp"
+              src={trimmingImg}
               alt="Professional tree trimming"
               className="h-full w-full object-cover"
             />

@@ -1,24 +1,29 @@
+import treeRemovalImg from "../assets/images/gallery_tree_removal.webp";
+import treeTrimmingImg from "../assets/images/service_tree_trimming.webp";
+import emergencyTreeImg from "../assets/images/gallery_emergency_tree.webp";
+import stumpGrindingImg from "../assets/images/gallery_stump_grinding.webp";
+
 export default function GallerySection() {
   const items = [
     {
       title: "Tree Removal",
       subtitle: "Safe & Professional",
-      image: "/gallery_tree_removal.webp"
+      image: treeRemovalImg
     },
     {
       title: "Tree Trimming",
       subtitle: "Healthy Growth",
-      image: "/service_tree_trimming.webp"
+      image: treeTrimmingImg
     },
     {
       title: "Emergency Service",
       subtitle: "24/7 Response",
-      image: "/gallery_emergency_tree.webp"
+      image: emergencyTreeImg
     },
     {
       title: "Stump Grinding",
       subtitle: "Complete Cleanup",
-      image: "/gallery_stump_grinding.webp"
+      image: stumpGrindingImg
     },
   ];
 

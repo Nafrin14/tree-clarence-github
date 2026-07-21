@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/images/logo.webp";
+import logo from "../assets/images/logo.png";
 import {
   FaPhoneAlt,
   FaEnvelope,
@@ -41,7 +41,10 @@ export default function Footer() {
           <img
             src={logo}
             alt="Clarence Arborcare & Landscaping"
-            className="h-24 w-auto"
+            width="240"
+            height="96"
+            loading="lazy"
+            className="h-24 w-auto object-contain"
           />
 
           <p className="mt-5 leading-7 text-white/60">
@@ -53,6 +56,7 @@ export default function Footer() {
           <div className="flex gap-4 mt-6">
             <a
               href="#"
+              aria-label="Facebook"
               className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#97ba8d] hover:text-black transition"
             >
               <FaFacebookF />
@@ -60,6 +64,7 @@ export default function Footer() {
 
             <a
               href="#"
+              aria-label="Instagram"
               className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#97ba8d] hover:text-black transition"
             >
               <FaInstagram />
@@ -69,38 +74,44 @@ export default function Footer() {
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-xl font-semibold mb-6">
-            Quick Links
-          </h3>
+          <h3 className="text-xl font-semibold mb-6">Quick Links</h3>
 
           <ul className="space-y-3 text-white/60">
             <li>
-              <Link to="/">Home</Link>
+              <a href="#home" className="hover:text-[#97ba8d] transition">
+                Home
+              </a>
             </li>
 
             <li>
-              <Link to="/">Services</Link>
+              <a href="#services" className="hover:text-[#97ba8d] transition">
+                Services
+              </a>
             </li>
 
             <li>
-              <Link to="/">About</Link>
+              <a href="#about" className="hover:text-[#97ba8d] transition">
+                About
+              </a>
             </li>
 
             <li>
-              <Link to="/">Gallery</Link>
+              <a href="#gallery" className="hover:text-[#97ba8d] transition">
+                Gallery
+              </a>
             </li>
 
             <li>
-              <Link to="/">Contact</Link>
+              <a href="#contact" className="hover:text-[#97ba8d] transition">
+                Contact
+              </a>
             </li>
           </ul>
         </div>
 
         {/* Services */}
         <div>
-          <h3 className="text-xl font-semibold mb-6">
-            Our Services
-          </h3>
+          <h3 className="text-xl font-semibold mb-6">Our Services</h3>
 
           <ul className="space-y-3 text-white/60">
             <li>Tree Removal</li>
@@ -114,41 +125,41 @@ export default function Footer() {
 
         {/* Contact */}
         <div>
-          <h3 className="text-xl font-semibold mb-6">
-            Contact Us
-          </h3>
+          <h3 className="text-xl font-semibold mb-6">Contact Us</h3>
 
           <div className="space-y-5 text-white/60">
             <div className="flex gap-3">
-              <FaPhoneAlt className="mt-1 text-[#97ba8d]" />
+              <FaPhoneAlt className="mt-1 shrink-0 text-[#97ba8d]" />
 
-              <div>
-                <a href="tel:+17167108864">
-                  (716) 710-8864
-                </a>
-              </div>
+              <a
+                href="tel:+17167108864"
+                className="hover:text-[#97ba8d] transition"
+              >
+                (716) 710-8864
+              </a>
             </div>
 
             <div className="flex gap-3">
-              <FaEnvelope className="mt-1 text-[#97ba8d]" />
+              <FaEnvelope className="mt-1 shrink-0 text-[#97ba8d]" />
 
-              <div>
-                <a href="mailto:kdassociatebfinc@gmail.com">
-                  kdassociatebfinc@gmail.com
-                </a>
-              </div>
+              <a
+                href="mailto:kdassociatebfinc@gmail.com"
+                className="break-all hover:text-[#97ba8d] transition"
+              >
+                kdassociatebfinc@gmail.com
+              </a>
             </div>
 
             <div className="flex gap-3">
-              <FaMapMarkerAlt className="mt-1 text-[#97ba8d]" />
+              <FaMapMarkerAlt className="mt-1 shrink-0 text-[#97ba8d]" />
 
-              <div>
+              <address className="not-italic">
                 9950 County Rd
                 <br />
                 Clarence Center,
                 <br />
                 NY 14032
-              </div>
+              </address>
             </div>
           </div>
         </div>
@@ -157,7 +168,7 @@ export default function Footer() {
       {/* Bottom */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/50">
-          <p>
+          <p className="text-center md:text-left">
             © {new Date().getFullYear()} Clarence Arborcare & Landscaping. All
             Rights Reserved.
           </p>
