@@ -1,11 +1,8 @@
 import midMountains from "../assets/images/tree-mid.png";
 import foreGrass from "../assets/images/tree-fore.webp";
 
-const treeHero =
-  `${import.meta.env.BASE_URL}tree-hero.webp`;
-
-const treeHero960 =
-  `${import.meta.env.BASE_URL}tree-hero-960.webp`;
+const treeHero = `${import.meta.env.BASE_URL}tree-hero.webp`;
+const treeHero960 = `${import.meta.env.BASE_URL}tree-hero-960.webp`;
 
 const leaves = [
   { id: 1, left: 4, delay: 1, duration: 18, size: 6, sway: 42 },
@@ -90,10 +87,9 @@ function Hero() {
         aria-hidden="true"
         width="1920"
         height="1080"
-        loading="eager"
-        fetchPriority="low"
+        loading="lazy"
         decoding="async"
-        className="pointer-events-none absolute inset-0 z-[5] h-full w-full select-none object-cover object-bottom opacity-30"
+        className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full select-none object-cover object-bottom opacity-30 md:block"
       />
 
       {/* Desktop glow */}
@@ -106,18 +102,17 @@ function Hero() {
 
       <FloatingLeaves />
 
-      {/* Decorative grass */}
+      {/* Decorative grass — desktop only */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[25] h-[32%] overflow-hidden"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[25] hidden h-[32%] overflow-hidden md:block"
       >
         <img
           src={foreGrass}
           alt=""
           width="1920"
           height="600"
-          loading="eager"
-          fetchPriority="low"
+          loading="lazy"
           decoding="async"
           className="h-full w-full select-none object-cover object-bottom"
         />
