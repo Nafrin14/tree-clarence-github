@@ -1,31 +1,28 @@
-import { useEffect, useState } from "react";
-
 import midMountains from "../assets/images/tree-mid.webp";
 import foreGrass from "../assets/images/tree-fore.webp";
 import treeHero from "../assets/images/tree-hero.webp";
 import treeHero960 from "../assets/images/tree-hero-960.webp";
 
-const leavesCount = 20;
+const leaves = [
+  { id: 1, left: 4, delay: 1, duration: 18, size: 6, sway: 42 },
+  { id: 2, left: 10, delay: 5, duration: 21, size: 8, sway: -55 },
+  { id: 3, left: 16, delay: 2, duration: 19, size: 5, sway: 67 },
+  { id: 4, left: 22, delay: 8, duration: 23, size: 7, sway: -36 },
+  { id: 5, left: 28, delay: 3, duration: 20, size: 9, sway: 58 },
+  { id: 6, left: 34, delay: 10, duration: 24, size: 6, sway: -62 },
+  { id: 7, left: 40, delay: 4, duration: 17, size: 5, sway: 39 },
+  { id: 8, left: 46, delay: 7, duration: 22, size: 8, sway: -48 },
+  { id: 9, left: 52, delay: 1.5, duration: 19, size: 6, sway: 64 },
+  { id: 10, left: 58, delay: 9, duration: 25, size: 7, sway: -40 },
+  { id: 11, left: 64, delay: 2.5, duration: 18, size: 5, sway: 51 },
+  { id: 12, left: 70, delay: 6, duration: 23, size: 9, sway: -66 },
+  { id: 13, left: 76, delay: 11, duration: 21, size: 6, sway: 44 },
+  { id: 14, left: 82, delay: 3.5, duration: 20, size: 8, sway: -52 },
+  { id: 15, left: 88, delay: 8.5, duration: 24, size: 5, sway: 61 },
+  { id: 16, left: 94, delay: 4.5, duration: 18, size: 7, sway: -43 },
+];
 
 function FloatingLeaves() {
-  const [leaves, setLeaves] = useState([]);
-
-  useEffect(() => {
-    const generatedLeaves = Array.from(
-      { length: leavesCount },
-      (_, index) => ({
-        id: index,
-        left: Math.random() * 100,
-        delay: Math.random() * 12,
-        duration: Math.random() * 10 + 12,
-        size: Math.random() * 7 + 4,
-        sway: Math.random() * 140 - 70,
-      })
-    );
-
-    setLeaves(generatedLeaves);
-  }, []);
-
   return (
     <div
       aria-hidden="true"
@@ -63,7 +60,21 @@ function Hero() {
       id="top"
       className="hero-section relative min-h-screen w-full overflow-hidden"
     >
-      <FloatingLeaves />
+      {/* Main hero image - LCP image */}
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src={treeHero960}
+          srcSet={`${treeHero960} 960w, ${treeHero} 1920w`}
+          sizes="100vw"
+          alt="Ancient oak tree at sunrise in Clarence Center, New York"
+          width="1920"
+          height="1280"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover object-bottom"
+        />
+      </div>
 
       {/* Background glow */}
       <div
@@ -80,26 +91,10 @@ function Hero() {
         aria-hidden="true"
         width="1920"
         height="1080"
+        loading="eager"
         decoding="async"
-        fetchPriority="high"
         className="hero-mountains pointer-events-none absolute bottom-0 left-0 h-full w-full select-none object-cover object-bottom opacity-90"
       />
-
-      {/* Main hero tree */}
-      <div className="absolute inset-0 overflow-hidden">
-        <img
-          src={treeHero}
-          srcSet={`${treeHero960} 960w, ${treeHero} 1920w`}
-          sizes="100vw"
-          alt="Ancient oak tree silhouette at sunrise"
-          width="1920"
-          height="1280"
-          decoding="async"
-          loading="eager"
-          fetchPriority="high"
-          className="absolute inset-0 h-full w-full object-cover object-bottom"
-        />
-      </div>
 
       {/* Foreground grass */}
       <img
@@ -108,9 +103,12 @@ function Hero() {
         aria-hidden="true"
         width="1920"
         height="600"
+        loading="eager"
         decoding="async"
         className="hero-grass pointer-events-none absolute bottom-[-35px] left-[-15%] z-[5] w-[130%] max-w-none select-none"
       />
+
+      <FloatingLeaves />
 
       {/* Hero content */}
       <div className="relative z-30 flex min-h-screen flex-col items-center justify-center px-6 text-center">

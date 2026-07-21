@@ -21,51 +21,55 @@ const navItems = [
 
 function ThemeToggle() {
   const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme) {
-      return savedTheme;
-    }
-
-    return "dark";
+    return localStorage.getItem("theme") || "dark";
   });
 
   useEffect(() => {
-    document.documentElement.classList.toggle(
-      "dark",
-      theme === "dark"
-    );
+    const root = document.documentElement;
+    const isDark = theme === "dark";
+
+    root.classList.toggle("dark", isDark);
+    root.style.colorScheme = isDark ? "dark" : "light";
   }, [theme]);
 
   const toggleTheme = () => {
-    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme((currentTheme) => {
+      const nextTheme =
+        currentTheme === "dark" ? "light" : "dark";
 
-    localStorage.setItem("theme", nextTheme);
-    setTheme(nextTheme);
+      localStorage.setItem("theme", nextTheme);
+
+      return nextTheme;
+    });
   };
+
+  const isDark = theme === "dark";
 
   return (
     <button
       type="button"
       onClick={toggleTheme}
       aria-label={
-        theme === "dark"
+        isDark
           ? "Switch to light mode"
           : "Switch to dark mode"
       }
-      className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white shadow-xl backdrop-blur-xl transition hover:bg-white/20"
+      aria-pressed={isDark}
+      className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-white/20"
     >
       <Sun
-        className={`h-5 w-5 transition-all duration-300 ${
-          theme === "dark"
+        aria-hidden="true"
+        className={`h-5 w-5 transition-transform duration-300 ${
+          isDark
             ? "-rotate-90 scale-0"
             : "rotate-0 scale-100"
         }`}
       />
 
       <Moon
-        className={`absolute h-5 w-5 transition-all duration-300 ${
-          theme === "dark"
+        aria-hidden="true"
+        className={`absolute h-5 w-5 transition-transform duration-300 ${
+          isDark
             ? "rotate-0 scale-100"
             : "rotate-90 scale-0"
         }`}
@@ -82,34 +86,44 @@ function Navbar() {
       .map((item) => document.getElementById(item.id))
       .filter(Boolean);
 
-    if (sections.length === 0) return;
+    if (sections.length === 0) {
+      return undefined;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visibleSections = entries.filter(
-          (entry) => entry.isIntersecting
-        );
+        const visibleSections = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (first, second) =>
+              Math.abs(first.boundingClientRect.top) -
+              Math.abs(second.boundingClientRect.top)
+          );
 
-        if (visibleSections.length === 0) return;
+        const nextActive = visibleSections[0]?.target.id;
 
-        const topSection = visibleSections.reduce((first, second) =>
-          first.boundingClientRect.top <
-          second.boundingClientRect.top
-            ? first
-            : second
-        );
-
-        setActive(topSection.target.id);
+        if (nextActive) {
+          setActive((currentActive) =>
+            currentActive === nextActive
+              ? currentActive
+              : nextActive
+          );
+        }
       },
       {
-        rootMargin: "-40% 0px -59% 0px",
+        root: null,
+        rootMargin: "-40% 0px -55% 0px",
         threshold: 0,
       }
     );
 
-    sections.forEach((section) => observer.observe(section));
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   const activeIndex = Math.max(
@@ -120,11 +134,18 @@ function Navbar() {
   const ActiveIcon = navItems[activeIndex].icon;
 
   const handleNavigation = (id) => {
+    const targetSection = document.getElementById(id);
+
+    if (!targetSection) {
+      return;
+    }
+
     setActive(id);
 
-    document
-      .getElementById(id)
-      ?.scrollIntoView({ behavior: "smooth" });
+    targetSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   return (
@@ -133,14 +154,16 @@ function Navbar() {
       <button
         type="button"
         onClick={() => handleNavigation("top")}
-        aria-label="Tree Clarence home"
+        aria-label="Go to homepage"
         className="fixed left-4 top-4 z-50 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-white shadow-xl md:hidden"
       >
         <img
           src={logo}
-          alt="Tree Clarence logo"
+          alt="Clarence Arborcare and Landscaping logo"
           width="48"
           height="48"
+          loading="eager"
+          decoding="async"
           className="h-full w-full scale-125 object-cover"
         />
       </button>
@@ -151,14 +174,16 @@ function Navbar() {
           <button
             type="button"
             onClick={() => handleNavigation("top")}
-            aria-label="Tree Clarence home"
+            aria-label="Go to homepage"
             className="hidden h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-white shadow-xl md:flex"
           >
             <img
               src={logo}
-              alt="Tree Clarence logo"
+              alt="Clarence Arborcare and Landscaping logo"
               width="48"
               height="48"
+              loading="eager"
+              decoding="async"
               className="h-full w-full scale-125 object-cover"
             />
           </button>
@@ -167,7 +192,10 @@ function Navbar() {
             className="nav-frame relative"
             style={{ "--nav-index": activeIndex }}
           >
-            <nav className="nav-notch flex items-end rounded-full border border-white/15 bg-black/20 px-2 shadow-xl backdrop-blur-xl">
+            <nav
+              aria-label="Primary navigation"
+              className="nav-notch flex items-end rounded-full border border-white/15 bg-black/20 px-2 shadow-xl backdrop-blur-md"
+            >
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = active === item.id;
@@ -176,13 +204,20 @@ function Navbar() {
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => handleNavigation(item.id)}
-                    aria-current={isActive ? "page" : undefined}
+                    onClick={() =>
+                      handleNavigation(item.id)
+                    }
+                    aria-current={
+                      isActive ? "page" : undefined
+                    }
                     className="relative flex h-16 w-16 flex-col items-center justify-end pb-2 md:w-28"
                   >
                     <span
+                      aria-hidden="true"
                       className={`mb-1 text-white/70 transition-opacity duration-300 ${
-                        isActive ? "opacity-0" : "opacity-100"
+                        isActive
+                          ? "opacity-0"
+                          : "opacity-100"
                       }`}
                     >
                       <Icon
@@ -205,7 +240,10 @@ function Navbar() {
               })}
             </nav>
 
-            <span className="nav-bubble pointer-events-none absolute top-0 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/30 text-white shadow-lg backdrop-blur-xl">
+            <span
+              aria-hidden="true"
+              className="nav-bubble pointer-events-none absolute top-0 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/30 text-white shadow-lg backdrop-blur-md"
+            >
               <ActiveIcon
                 className="h-5 w-5"
                 strokeWidth={2.2}

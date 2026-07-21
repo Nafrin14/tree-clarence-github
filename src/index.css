@@ -10,11 +10,25 @@ body {
   background: #ffffff;
   color: #111827;
   font-family: Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* =========================
+   Navbar
+========================= */
+
 @property --notch-x {
   syntax: "<length>";
   inherits: true;
@@ -31,8 +45,7 @@ body {
     var(--nav-item-width)
   );
 
-  transition: --notch-x 0.45s
-    cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: --notch-x 0.35s ease;
 }
 
 .nav-notch {
@@ -50,10 +63,18 @@ body {
 }
 
 .nav-bubble {
-  left: calc(var(--notch-x) - 1.5rem);
+  left: var(--nav-padding-x);
+  transform:
+    translateX(
+      calc(
+        var(--nav-index, 0) *
+        var(--nav-item-width)
+      )
+    )
+    translateY(-50%);
 
-  transition: left 0.45s
-    cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.35s ease;
+  will-change: transform;
 }
 
 @media (min-width: 768px) {
@@ -61,6 +82,11 @@ body {
     --nav-item-width: 7rem;
   }
 }
+
+/* =========================
+   Hero
+========================= */
+
 .hero-section {
   background: linear-gradient(
     180deg,
@@ -68,6 +94,7 @@ body {
     #4d6e5d 45%,
     #7a9c80 100%
   );
+  contain: layout paint;
 }
 
 .hero-gradient {
@@ -80,34 +107,35 @@ body {
 @keyframes hero-glow-float {
   0%,
   100% {
-    transform: translateX(-50%) translateY(0);
+    transform: translate3d(-50%, 0, 0);
   }
 
   50% {
-    transform: translateX(-50%) translateY(-18px);
+    transform: translate3d(-50%, -14px, 0);
   }
 }
 
 .hero-glow {
-  animation: hero-glow-float 6s ease-in-out infinite;
+  animation: hero-glow-float 7s ease-in-out infinite;
+  will-change: transform;
 }
 
 @keyframes hero-fade-up {
   from {
     opacity: 0;
-    transform: translateY(35px);
+    transform: translate3d(0, 24px, 0);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes hero-pop-in {
   from {
     opacity: 0;
-    transform: scale(0.85);
+    transform: scale(0.92);
   }
 
   to {
@@ -118,28 +146,28 @@ body {
 
 .hero-fade-up {
   opacity: 0;
-  animation: hero-fade-up 0.9s ease-out forwards;
+  animation: hero-fade-up 0.7s ease-out forwards;
 }
 
 .hero-pop-in {
   opacity: 0;
-  animation: hero-pop-in 0.6s ease-out forwards;
+  animation: hero-pop-in 0.5s ease-out forwards;
 }
 
 .hero-delay-1 {
-  animation-delay: 0.15s;
+  animation-delay: 0.08s;
 }
 
 .hero-delay-2 {
-  animation-delay: 0.3s;
+  animation-delay: 0.16s;
 }
 
 .hero-delay-3 {
-  animation-delay: 0.45s;
+  animation-delay: 0.24s;
 }
 
 .hero-delay-4 {
-  animation-delay: 0.6s;
+  animation-delay: 0.32s;
 }
 
 @keyframes leaf-fall {
@@ -153,23 +181,25 @@ body {
   }
 
   50% {
-    opacity: 0.85;
-    transform: translate3d(
+    opacity: 0.8;
+    transform:
+      translate3d(
         var(--leaf-sway, 30px),
-        60vh,
+        55vh,
         0
       )
-      rotate(360deg);
+      rotate(280deg);
   }
 
   100% {
     opacity: 0;
-    transform: translate3d(
-        calc(var(--leaf-sway, 30px) * -0.6),
-        120vh,
+    transform:
+      translate3d(
+        calc(var(--leaf-sway, 30px) * -0.5),
+        110vh,
         0
       )
-      rotate(720deg);
+      rotate(560deg);
   }
 }
 
@@ -177,18 +207,13 @@ body {
   animation-name: leaf-fall;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  will-change: transform, opacity;
+  will-change: transform;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-glow,
-  .hero-fade-up,
-  .hero-pop-in,
-  .hero-leaf {
-    animation: none;
-    opacity: 1;
-  }
-}
+/* =========================
+   Services
+========================= */
+
 .services-gradient {
   background: linear-gradient(
     90deg,
@@ -202,15 +227,15 @@ body {
 
 .service-heading {
   opacity: 0;
-  transform: translateY(35px);
+  transform: translate3d(0, 24px, 0);
   transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .service-heading-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .service-card {
@@ -219,27 +244,35 @@ body {
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 1.5rem;
   padding: 2rem;
-  background:
-    linear-gradient(
-      135deg,
-      rgb(255 255 255 / 8%),
-      rgb(255 255 255 / 2%)
-    );
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 8%),
+    rgb(255 255 255 / 2%)
+  );
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 8%),
-    0 25px 60px rgb(0 0 0 / 20%);
-  backdrop-filter: blur(18px);
+    0 18px 40px rgb(0 0 0 / 16%);
   opacity: 0;
-  transform: translateY(35px);
+  transform: translate3d(0, 24px, 0);
   transition:
-    opacity 0.75s ease,
-    transform 0.75s ease,
-    border-color 0.3s ease;
+    opacity 0.6s ease,
+    transform 0.6s ease,
+    border-color 0.25s ease;
+  contain: layout paint;
+}
+
+@supports (
+  backdrop-filter: blur(10px)
+) {
+  .service-card {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
 }
 
 .service-card-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .service-card:hover {
@@ -254,9 +287,9 @@ body {
   height: 12rem;
   border-radius: 9999px;
   background: rgb(139 177 101 / 15%);
-  filter: blur(45px);
+  filter: blur(32px);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .service-card:hover .service-card-glow {
@@ -264,36 +297,39 @@ body {
 }
 
 .service-link span {
-  transition: transform 0.25s ease;
+  transition: transform 0.2s ease;
 }
 
 .service-link:hover span {
-  transform: translateX(5px);
+  transform: translateX(4px);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .service-heading,
-  .service-card {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
+/* =========================
+   Contact
+========================= */
+
 .contact-panel {
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 1.75rem;
   padding: 2rem;
-  background:
-    linear-gradient(
-      135deg,
-      rgb(255 255 255 / 7%),
-      rgb(255 255 255 / 2%)
-    );
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 7%),
+    rgb(255 255 255 / 2%)
+  );
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 7%),
-    0 28px 70px rgb(0 0 0 / 22%);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+    0 20px 50px rgb(0 0 0 / 18%);
+  contain: layout paint;
+}
+
+@supports (
+  backdrop-filter: blur(10px)
+) {
+  .contact-panel {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
 }
 
 .contact-input {
@@ -305,9 +341,9 @@ body {
   color: white;
   outline: none;
   transition:
-    border-color 0.25s ease,
-    background-color 0.25s ease,
-    box-shadow 0.25s ease;
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .contact-input::placeholder {
@@ -317,7 +353,7 @@ body {
 .contact-input:focus {
   border-color: rgb(167 207 121 / 65%);
   background: rgb(255 255 255 / 6%);
-  box-shadow: 0 0 0 4px rgb(167 207 121 / 8%);
+  box-shadow: 0 0 0 3px rgb(167 207 121 / 8%);
 }
 
 .contact-input option {
@@ -325,26 +361,32 @@ body {
   color: white;
 }
 
-@media (max-width: 640px) {
-  .contact-panel {
-    padding: 1.5rem;
-  }
-}
+/* =========================
+   Legal Pages
+========================= */
+
 .legal-page-card {
   border: 1px solid rgb(255 255 255 / 9%);
   border-radius: 2rem;
   padding: 2rem;
-  background:
-    linear-gradient(
-      135deg,
-      rgb(255 255 255 / 6%),
-      rgb(255 255 255 / 2%)
-    );
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 6%),
+    rgb(255 255 255 / 2%)
+  );
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 6%),
-    0 35px 90px rgb(0 0 0 / 28%);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+    0 24px 60px rgb(0 0 0 / 22%);
+  contain: layout paint;
+}
+
+@supports (
+  backdrop-filter: blur(10px)
+) {
+  .legal-page-card {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
 }
 
 .legal-introduction {
@@ -403,7 +445,7 @@ body {
 
 .legal-content a {
   color: #a6c79c;
-  transition: color 0.25s ease;
+  transition: color 0.2s ease;
 }
 
 .legal-content a:hover {
@@ -426,6 +468,10 @@ body {
   color: rgb(255 255 255 / 85%);
 }
 
+/* =========================
+   Responsive
+========================= */
+
 @media (min-width: 768px) {
   .legal-page-card {
     padding: 3.5rem;
@@ -433,6 +479,10 @@ body {
 }
 
 @media (max-width: 640px) {
+  .contact-panel {
+    padding: 1.5rem;
+  }
+
   .legal-page-card {
     padding: 1.4rem;
     border-radius: 1.5rem;
@@ -444,5 +494,39 @@ body {
 
   .legal-contact-card {
     padding: 1.25rem;
+  }
+
+  .hero-leaf:nth-child(n + 11) {
+    display: none;
+  }
+}
+
+/* =========================
+   Reduced Motion
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-glow,
+  .hero-fade-up,
+  .hero-pop-in,
+  .hero-leaf,
+  .service-heading,
+  .service-card,
+  .nav-frame,
+  .nav-bubble {
+    animation: none;
+    transition: none;
+  }
+
+  .hero-fade-up,
+  .hero-pop-in,
+  .service-heading,
+  .service-card {
+    opacity: 1;
+    transform: none;
   }
 }
