@@ -16,17 +16,13 @@ const leaves = [
   { id: 10, left: 58, delay: 9, duration: 25, size: 7, sway: -40 },
   { id: 11, left: 64, delay: 2.5, duration: 18, size: 5, sway: 51 },
   { id: 12, left: 70, delay: 6, duration: 23, size: 9, sway: -66 },
-  { id: 13, left: 76, delay: 11, duration: 21, size: 6, sway: 44 },
-  { id: 14, left: 82, delay: 3.5, duration: 20, size: 8, sway: -52 },
-  { id: 15, left: 88, delay: 8.5, duration: 24, size: 5, sway: 61 },
-  { id: 16, left: 94, delay: 4.5, duration: 18, size: 7, sway: -43 },
 ];
 
 function FloatingLeaves() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
+      className="pointer-events-none absolute inset-0 z-20 hidden overflow-hidden md:block"
     >
       {leaves.map((leaf) => (
         <span
@@ -50,12 +46,10 @@ function Hero() {
   const scrollToServices = (event) => {
     event.preventDefault();
 
-    document
-      .getElementById("services")
-      ?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+    document.getElementById("services")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   return (
@@ -63,7 +57,7 @@ function Hero() {
       id="top"
       className="hero-section relative min-h-screen w-full overflow-hidden"
     >
-      {/* Main hero background */}
+      {/* LCP image — only high-priority image */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={treeHero960}
@@ -79,13 +73,13 @@ function Hero() {
         />
       </div>
 
-      {/* Soft dark overlay for text visibility */}
+      {/* Contrast overlay */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/10 via-black/15 to-black/45"
+        className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/10 via-black/20 to-black/55"
       />
 
-      {/* Distant mountain layer */}
+      {/* Decorative mountain layer */}
       <img
         src={midMountains}
         alt=""
@@ -93,31 +87,37 @@ function Hero() {
         width="1920"
         height="1080"
         loading="eager"
+        fetchPriority="low"
         decoding="async"
-        className="pointer-events-none absolute inset-0 z-[5] h-full w-full select-none object-cover object-bottom opacity-45"
+        className="pointer-events-none absolute inset-0 z-[5] h-full w-full select-none object-cover object-bottom opacity-30"
       />
 
-      {/* Background glow */}
+      {/* Glow — desktop only */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-10"
+        className="pointer-events-none absolute inset-0 z-10 hidden md:block"
       >
-        <div className="hero-glow absolute left-1/2 top-[18%] h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#a4d38b]/25 blur-3xl" />
+        <div className="hero-glow absolute left-1/2 top-[18%] h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#a4d38b]/20 blur-3xl" />
       </div>
 
       <FloatingLeaves />
 
-      {/* Foreground grass */}
-      <img
-        src={foreGrass}
-        alt=""
+      {/* Decorative grass */}
+      <div
         aria-hidden="true"
-        width="1920"
-        height="600"
-        loading="eager"
-        decoding="async"
-        className="pointer-events-none absolute bottom-[-35px] left-[-15%] z-[25] w-[130%] max-w-none select-none"
-      />
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[25] h-[32%] overflow-hidden"
+      >
+        <img
+          src={foreGrass}
+          alt=""
+          width="1920"
+          height="600"
+          loading="eager"
+          fetchPriority="low"
+          decoding="async"
+          className="h-full w-full select-none object-cover object-bottom"
+        />
+      </div>
 
       {/* Hero content */}
       <div className="relative z-30 flex min-h-screen flex-col items-center justify-center px-6 pb-24 pt-28 text-center md:pb-20 md:pt-32">
@@ -134,7 +134,7 @@ function Hero() {
           Tree Experts.
         </h1>
 
-        <p className="hero-fade-up hero-delay-3 mt-6 max-w-xl text-base leading-7 text-white/85 drop-shadow md:text-lg">
+        <p className="hero-fade-up hero-delay-3 mt-6 max-w-xl text-base leading-7 text-white/90 drop-shadow md:text-lg">
           Locally owned and operated tree service company committed to the
           highest standards of care, safety, and customer satisfaction.
         </p>
@@ -142,7 +142,7 @@ function Hero() {
         <a
           href="#services"
           onClick={scrollToServices}
-          className="hero-pop-in hero-delay-4 mt-10 rounded-full border border-white/40 bg-black/20 px-6 py-3 text-sm text-white backdrop-blur-sm transition hover:bg-white/15"
+          className="hero-pop-in hero-delay-4 mt-10 rounded-full border border-white/50 bg-black/30 px-6 py-3 text-sm text-white transition hover:bg-white/15"
         >
           View Our Services ↓
         </a>
