@@ -1,7 +1,11 @@
 import midMountains from "../assets/images/tree-mid.png";
 import foreGrass from "../assets/images/tree-fore.png";
-import treeHero from "../assets/images/tree-hero.webp";
-import treeHero960 from "../assets/images/tree-hero-960.webp";
+
+const treeHero =
+  `${import.meta.env.BASE_URL}tree-hero.webp`;
+
+const treeHero960 =
+  `${import.meta.env.BASE_URL}tree-hero-960.webp`;
 
 const leaves = [
   { id: 1, left: 4, delay: 1, duration: 18, size: 6, sway: 42 },
@@ -57,7 +61,7 @@ function Hero() {
       id="top"
       className="hero-section relative min-h-screen w-full overflow-hidden"
     >
-      {/* LCP image — only high-priority image */}
+      {/* Main LCP image */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={treeHero960}
@@ -92,7 +96,7 @@ function Hero() {
         className="pointer-events-none absolute inset-0 z-[5] h-full w-full select-none object-cover object-bottom opacity-30"
       />
 
-      {/* Glow — desktop only */}
+      {/* Desktop glow */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-10 hidden md:block"
