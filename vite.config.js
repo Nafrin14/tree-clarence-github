@@ -3,6 +3,17 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  base: "/tree-clarence-github/",
-  plugins: [react(), tailwindcss()],
+
+  base: "/",
+
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+
+  build: {
+    assetsInlineLimit: 4096,
+    chunkSizeWarningLimit: 1000,
+  },
+
 });
